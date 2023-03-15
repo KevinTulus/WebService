@@ -99,7 +99,7 @@ git commit -m "style: add new background pattern"
 7. Push file ke repository. Jangan langsung push ke main, push ke branch sesuai yang kalian kerjakan.
 
 ```console
-it push -u origin kevin
+git push -u origin kevin
 ```
 
 8. Lakukan pull request untuk di review dan di merge ke main branch.
