@@ -27,7 +27,7 @@ php artisan key:generate
 php artisan config:cache
 ```
 
-6. Buat database mysql dengan nama testapi.
+6. Buat database mysql dengan nama db_angkot.
 7. Jalankan migrate.
 
 ```console
