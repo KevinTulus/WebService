@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\AngkotController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +14,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::apiResource('/posts', App\Http\Controllers\Api\PostController::class);
+
+Route::get('/angkot', [AngkotController::class, 'index']);
+Route::get('/angkot/{id}', [AngkotController::class, 'show']);
+Route::get('/rute', [AngkotController::class, 'index']);
+Route::get('/rute/{id}', [AngkotController::class, 'show']);
+
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
