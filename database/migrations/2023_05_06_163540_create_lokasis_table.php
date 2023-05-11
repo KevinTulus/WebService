@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('lokasis', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('rute_id');
-            $table->foreign('rute_id')->references('id')->on('rutes');
+            $table->unsignedBigInteger('street_name_id');
+            $table->foreign('street_name_id')->references('id')->on('street_names');
             $table->string('nama_lokasi');
             $table->timestamps();
         });
