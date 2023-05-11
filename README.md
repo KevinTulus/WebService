@@ -34,7 +34,7 @@ php artisan config:cache
 php artisan migrate
 ```
 
-9. Jalankan laravel.
+8. Jalankan laravel.
 
 ```console
 php artisan serve
