@@ -15,17 +15,11 @@ class AngkotController extends Controller
     {
         $Angkots = Angkot::select('id', 'no', 'nama_angkot', 'warna')->get();
         foreach ($Angkots as $key => $value) {
-            $Angkots[$key]['nama_jalan'] = Rute::where('angkot_id' ,$value['id'])->get()->pluck('nama_jalan');
+            $Angkots[$key]['nama_jalan'] = Rute::join('street_names', 'rutes.street_names_id', '=', 'street_names.id')
+                                                ->where('angkot_id' ,$value['id'])
+                                                ->pluck('nama_jalan');
         }
         return $Angkots;
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
     }
 
     /**
@@ -34,57 +28,34 @@ class AngkotController extends Controller
     // public function show(string $id)
     public function show(string $id)
     {
-        return $id;
-        // $angkot = Angkot::where('id', $id)->select('id', 'no', 'nama_angkot', 'warna')->first();
-        // $angkot['nama_jalan'] = Rute::where('angkot_id', $angkot['id'])->get()->pluck('nama_jalan');
-        // return $angkot;
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $angkot = Angkot::where('id', $id)->select('id', 'no', 'nama_angkot', 'warna')->first();
+        $angkot['nama_jalan'] = Rute::join('street_names', 'rutes.street_names_id', '=', 'street_names.id')
+                                    ->where('angkot_id', $angkot['id'])
+                                    ->pluck('nama_jalan');
+        return $angkot;
     }
 
     /**
      * Display angkot going to that place.
      */
-    public function checkRequest(Request $request, string $id)
+    public function angkotTo(string $nama_jalan)
     {
-        if ($request->has('type')) {
-            return $request;
-        } else {
-            // return redirect()->action([AngkotController::class, 'index']);
-            // return $id;
-            return redirect()->action(
-                [AngkotController::class, 'show'], ['id' => $id]
-            );
+        $angkot_id = Rute::join('street_names', 'rutes.street_names_id', '=', 'street_names.id')
+                    ->leftJoin('lokasis', 'street_names.id', '=', 'lokasis.street_name_id')
+                    ->where('nama_jalan', 'like', '%'.$nama_jalan.'%')
+                    ->orWhere('nama_lokasi', 'like', '%'.$nama_jalan.'%')
+                    ->pluck('angkot_id')
+                    ->unique();
+
+        $angkot = array();
+        foreach ($angkot_id as $key => $value) {
+            $angkot[] = Angkot::where('id', $value)->select('id', 'no', 'nama_angkot', 'warna')->first();
+            $angkot[] = Rute::join('street_names', 'rutes.street_names_id', '=', 'street_names.id')
+                                        ->where('angkot_id', $value)
+                                        ->pluck('nama_jalan');
         }
+
+        return $angkot;
     }
 
-    /**
-     * Display angkot going to that place.
-     */
-    public function angkotTo(Request $request, string $nama_jalan)
-    {
-        //
-    }
-
-    /**
-     * Display angkot from that place.
-     */
-    public function angkotFrom(Request $request, string $nama_jalan)
-    {
-        //
-    }
 }
