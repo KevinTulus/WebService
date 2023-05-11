@@ -13,9 +13,11 @@ class AngkotController extends Controller
      */
     public function index()
     {
-        return Angkot::join('rutes', 'angkots.id', '=', 'rutes.angkot_id')
-                        ->select('angkots.id', 'no', 'nama_angkot', 'warna', 'nama_jalan', )
-                        ->get();
+        $Angkots = Angkot::select('id', 'no', 'nama_angkot', 'warna')->get();
+        foreach ($Angkots as $key => $value) {
+            $Angkots[$key]['nama_jalan'] = Rute::where('angkot_id' ,$value['id'])->get()->pluck('nama_jalan');
+        }
+        return $Angkots;
     }
 
     /**
@@ -29,14 +31,13 @@ class AngkotController extends Controller
     /**
      * Display the specified resource.
      */
+    // public function show(string $id)
     public function show(string $id)
     {
-        // return Angkot::select('id', 'no', 'nama_angkot', 'warna')->find($id);
-
-        $angkot = Angkot::select('id', 'no', 'nama_angkot', 'warna')->find($id);
-        $angkot['rute'] = Rute::where('angkot_id' ,$id)->get('nama_jalan')->implode('nama_jalan', '->');
-        // dd($rute[1]->nama_jalan);
-        return $angkot;
+        return $id;
+        // $angkot = Angkot::where('id', $id)->select('id', 'no', 'nama_angkot', 'warna')->first();
+        // $angkot['nama_jalan'] = Rute::where('angkot_id', $angkot['id'])->get()->pluck('nama_jalan');
+        // return $angkot;
     }
 
     /**
@@ -51,6 +52,38 @@ class AngkotController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
+    {
+        //
+    }
+
+    /**
+     * Display angkot going to that place.
+     */
+    public function checkRequest(Request $request, string $id)
+    {
+        if ($request->has('type')) {
+            return $request;
+        } else {
+            // return redirect()->action([AngkotController::class, 'index']);
+            // return $id;
+            return redirect()->action(
+                [AngkotController::class, 'show'], ['id' => $id]
+            );
+        }
+    }
+
+    /**
+     * Display angkot going to that place.
+     */
+    public function angkotTo(Request $request, string $nama_jalan)
+    {
+        //
+    }
+
+    /**
+     * Display angkot from that place.
+     */
+    public function angkotFrom(Request $request, string $nama_jalan)
     {
         //
     }
