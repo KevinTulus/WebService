@@ -17,6 +17,8 @@ class DatabaseSeeder extends Seeder
 
         \App\Models\Angkot::factory(10)->create();
 
+        \App\Models\StreetName::factory(50)->create();
+
         for ($i=1; $i < 11 ; $i++) {
             for ($j=1; $j < 11 ; $j++) {
                 \App\Models\Rute::factory()->state([
@@ -29,7 +31,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\Lokasi::factory(10)->create();
 
         DB::table('deskripsis')->insert([
-            'harga_per_kilometer' => 2,
+            'harga_per_kilometer' => 2000,
             'jumlah_maksimal' => '10',
             'jam_operasional' => '05.00 - 22.00',
         ]);

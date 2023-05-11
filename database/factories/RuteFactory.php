@@ -18,9 +18,10 @@ class RuteFactory extends Factory
     {
         return [
             // 'angkot_id ' => fake()->randomDigitNotNull(),
-            'nama_jalan' => fake()->streetName(),
+            // 'nama_jalan' => fake()->streetName(),
             // 'urutan' => fake()->unique()->numberBetween(1, 10),
-            'km' => fake()->randomFloat(1, 1, 10),
+            // 'km' => fake()->randomFloat(1, 1, 10),
+            'street_names_id' => fake()->numberBetween(1, 50),
         ];
     }
 }
