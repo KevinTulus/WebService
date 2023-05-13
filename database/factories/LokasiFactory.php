@@ -17,7 +17,7 @@ class LokasiFactory extends Factory
     public function definition(): array
     {
         return [
-            'rute_id' => fake()->numberBetween(1, 50),
+            'street_name_id' => fake()->unique()->numberBetween(1, 50),
             'nama_lokasi' => fake()->secondaryAddress(),
         ];
     }
