@@ -42,38 +42,50 @@ class AngkotController extends Controller
             $angkots[$key]['rute'] = $this->harga($angkots[$key]['id']);
             $angkots[$key] = $angkots[$key]->only('no', 'nama_angkot', 'warna', 'rute');
         }
-        return $angkots;
+        return response()->json(['data' => $angkots], 200);
     }
 
     public function oneAngkot(string $no)
     {
         $angkot = Angkot::where('no', $no)->select('id', 'no', 'nama_angkot', 'warna')->first();
+        if (!$angkot) {
+            return response()->json(['message' => "Data tidak ditemukan"], 404);
+        }
         $angkot['rute'] = $this->harga($angkot['id']);
         $angkot = $angkot->only('no', 'nama_angkot', 'warna', 'rute');
-        return $angkot;
+        return response()->json(['data' => $angkot], 200);
     }
 
     public function angkotTo(string $nama_jalan)
     {
         $angkot_id = $this->cari($nama_jalan);
+        if ($angkot_id->isEmpty()) {
+            return response()->json(['message' => "Data tidak ditemukan"], 404);
+        }
         foreach ($angkot_id as $key => $value) {
             $angkot[$key] = Angkot::where('id', $value)->select('id', 'no', 'nama_angkot', 'warna')->first();
             $angkot[$key]['rute'] = $this->harga($value);
             $angkot[$key] = $angkot[$key]->only('no', 'nama_angkot', 'warna', 'rute');
         }
-        return $angkot;
+        return response()->json(['data' => $angkot], 200);
     }
 
     public function angkotBetween(string $nama_jalan1, string $nama_jalan2)
     {
         $angkot_id1 = $this->cari($nama_jalan1);
+        if ($angkot_id1->isEmpty()) {
+            return response()->json(['message' => "Data tidak ditemukan"], 404);
+        }
         $angkot_id2 = $this->cari($nama_jalan2);
+        if ($angkot_id2->isEmpty()) {
+            return response()->json(['message' => "Data tidak ditemukan"], 404);
+        }
         $angkot_id = $angkot_id1->intersect($angkot_id2);
         foreach ($angkot_id as $key => $value) {
             $angkot[$key] = Angkot::where('id', $value)->select('id', 'no', 'nama_angkot', 'warna')->first();
             $angkot[$key]['rute'] = $this->harga($value);
             $angkot[$key] = $angkot[$key]->only('no', 'nama_angkot', 'warna', 'rute');
         }
-        return $angkot;
+        return response()->json(['data' => $angkot], 200);
     }
 }
