@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Rute;
 use App\Models\Angkot;
+use App\Models\Lokasi;
 use App\Models\Deskripsi;
+use App\Models\StreetName;
 
 class AngkotController extends Controller
 {
@@ -54,6 +56,19 @@ class AngkotController extends Controller
         $angkot['rute'] = $this->harga($angkot['id']);
         $angkot = $angkot->only('no', 'nama_angkot', 'warna', 'rute');
         return response()->json(['data' => $angkot], 200);
+    }
+
+    public function allJalan()
+    {
+        $jalan = StreetName::get(['nama_jalan', 'km']);
+        return response()->json(['data' => $jalan], 200);
+    }
+
+    public function allLokasi()
+    {
+        $lokasi = Lokasi::join('street_names', 'lokasis.street_name_id', '=', 'street_names.id')
+                        ->get(['nama_lokasi', 'nama_jalan', 'km']);
+        return response()->json(['data' => $lokasi], 200);
     }
 
     public function angkotTo(string $nama_jalan)
