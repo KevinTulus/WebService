@@ -1,7 +1,8 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AngkotController;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::post('/angkot/register', [AuthController::class, 'register']);
+Route::post('/angkot/login', [AuthController::class, 'login']);
+
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get('/angkot', [AngkotController::class, 'allAngkot']);
+    Route::get('/nama_jalan', [AngkotController::class, 'allJalan']);
+    Route::get('/lokasi', [AngkotController::class, 'allLokasi']);
+    Route::get('/angkot/{no}', [AngkotController::class, 'oneAngkot']);
+    Route::get('/angkot/search/{nama_jalan}', [AngkotController::class, 'angkotTo']);
+    Route::get('/angkot/search/{nama_jalan1}/{nama_jalan2}', [AngkotController::class, 'angkotBetween']);
+    Route::post('/angkot/logout', [AuthController::class, 'logout']);
 });
