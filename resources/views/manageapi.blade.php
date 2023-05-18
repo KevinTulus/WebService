@@ -52,10 +52,11 @@
       </div>
       <div class="modal-body">
         <p class="card-text">Your API Key is:</p>
-        <textarea class="form-control" rows="3" readonly>kode api disini</textarea>
+        <textarea class="form-control" id="apiKeyTextArea" rows="3" readonly>kode api disini</textarea>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onclick="copyApiKey()">Copy</button>
       </div>
     </div>
   </div>
@@ -84,5 +85,26 @@
     </div>
   </div>
 </div>
+<script>
+  function copyApiKey() {
+  /* Get the text area element */
+  var apiKeyTextArea = document.getElementById("apiKeyTextArea");
+
+  /* Select the text within the text area */
+  apiKeyTextArea.select();
+  apiKeyTextArea.setSelectionRange(0, 99999); /* For mobile devices */
+
+  /* Copy the selected text to the clipboard */
+  document.execCommand("copy");
+
+  /* Deselect the text area */
+  apiKeyTextArea.blur();
+
+  /* Optionally, provide some visual feedback to the user */
+  var copyButton = document.querySelector("#apiKeyModal .modal-footer .btn-primary");
+  copyButton.innerHTML = "Copied!";
+  copyButton.disabled = true;
+}
+</script>
 @endsection
 
