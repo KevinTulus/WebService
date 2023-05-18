@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ProfileController;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,7 +22,7 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->name('dashboard.page');
+})->middleware('auth')->name('dashboard.page');
 
 Route::get('/updateprofile', function () {
     return view('updateprofile');
@@ -29,6 +32,8 @@ Route::get('/manage', function () {
     return view('manageapi');
 })->name('manage.api.page');
 
+
 Route::get('/login',[LoginController::class,'login'])->name('login');
 Route::post('/authen',[LoginController::class,'authen'])->name('authen');
 Route::get('/logout',[LoginController::class,'logout'])->name('logout');
+Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');

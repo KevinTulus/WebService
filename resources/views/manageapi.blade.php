@@ -2,10 +2,11 @@
 
 @section('content')
 <!-- Manage API Section -->
-<div class="container py-4" style="padding: 0 50px;margin-bottom: 50px;margin-top: 100px;">
+<div class="container py-4" style="padding: 0 100px;margin-bottom: 50px;margin-top: 100px;">
   <h1 class="mb-4">Manage API</h1>
-  <span>angkotAPI.com Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..</span>
+  <span>
+  Welcome to our API Management Page! Here, you have complete control over managing your APIs securely and ensuring that they remain hidden from prying eyes. With the card below, you can easily configure and protect your valuable API endpoints.</span>
+        <p></p>
         <p class="lead">
         For complete documentation please visit our <a href="#" target="_blank">angkot API Documentation</a> section. 
         </p>
@@ -16,15 +17,23 @@
         <div class="card-header">
           API Key
         </div>
-        <div class="card-body">
-          <p class="card-text">Your API Key is:</p>
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#apiKeyModal">View</button>
-          <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#regenerateApiKeyModal">Regenerate</button>
-          <form action="#" method="POST" class="d-inline">
-            @csrf
-            @method('DELETE')
-            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete your API Key?')">Delete</button>
-          </form>
+        <div class="card-body ">
+          <div class="d-flex justify-content-start">
+            <button type="button" class="btn btn-primary align-items-center mr-2" data-toggle="modal" data-target="#apiKeyModal">
+              <i class="fas fa-eye mr-1"></i> <span class="d-none d-sm-inline">View</span>
+            </button>
+            <button type="button" class="btn btn-secondary align-items-center mr-2" data-toggle="modal" data-target="#regenerateApiKeyModal">
+              <i class="fas fa-sync-alt mr-1"></i> <span class="d-none d-sm-inline">Regenerate</span>
+            </button>
+            <form action="#" method="POST" class="d-inline">
+              @csrf
+              @method('DELETE')
+              <button type="submit" class="btn btn-danger align-items-center" onclick="return confirm('Are you sure you want to delete your API Key?')">
+                <i class="fas fa-trash-alt mr-1"></i> <span class="d-none d-sm-inline">Delete</span>
+              </button>
+            </form>
+          </div>
+        </div>
         </div>
       </div>
     </div>
