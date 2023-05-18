@@ -2,7 +2,7 @@
 
 @section('content')
 <!-- Manage API Section -->
-<div class="container py-4" style="padding: 0 100px;margin-bottom: 50px;margin-top: 100px;">
+<div class="container py-4" style="margin-bottom: 50px;margin-top: 100px;">
   <h1 class="mb-4">Manage API</h1>
   <span>
   Welcome to our API Management Page! Here, you have complete control over managing your APIs securely and ensuring that they remain hidden from prying eyes. With the card below, you can easily configure and protect your valuable API endpoints.</span>

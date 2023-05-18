@@ -11,9 +11,9 @@
   }
 </style>
 <div class="container mt-5">
-  <div class="row justify-content-center">
+  <div class="row">
     <div class="col-md-6">
-      <div class="card " style="margin-top:50px;">
+      <div class="card " style="margin-top:50px;margin-bottom:50px;">
         <div class="card-body">
           <h1 class="card-title text-center">Update Profile</h1>
           <div id="alert-container"></div>

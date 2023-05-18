@@ -20,17 +20,13 @@ Route::get('/', function () {
     return view('welcome');
 })->middleware('auth');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware('auth')->name('dashboard.page');
-
 Route::get('/updateprofile', function () {
     return view('updateprofile');
 })->name('update.profile.page');
 
 Route::get('/manage', function () {
     return view('manageapi');
-})->name('manage.api.page');
+})->middleware('auth')->name('manage.api.page');
 
 
 Route::get('/login',[LoginController::class,'login'])->name('login');
