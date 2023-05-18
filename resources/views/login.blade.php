@@ -33,7 +33,7 @@
     <!-- Pills navs -->
     <div class="card-body">
         <!-- Untuk menerima pesan error yang dikirim dari LoginController ketika return ke halaman ini -->
-        @if($errors->any()) 
+        @if($errors->any())
         <div class="alert alert-danger">
             <ul>
                 @foreach($errors->all() as $item)
@@ -58,7 +58,7 @@
     <div class="tab-content">
         <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
         <!--Menggunakan route('authen') untuk memproses fungsi login -->
-        <form method="post" action="{{ route('authen') }}"> 
+        <form method="post" action="{{ route('authen') }}">
         @csrf
         <!-- Email input -->
         <div class="form-outline mb-4">
@@ -66,13 +66,13 @@
             <input name="email" id="loginName" class="form-control" value="{{ old ('email') }}"/>
             <label class="form-label" for="loginName">Email or username</label>
         </div>
-        
+
         <!-- Password input -->
         <div class="form-outline mb-4">
             <input name="password" type="password" id="loginPassword" class="form-control"/>
             <label class="form-label" for="loginPassword">Password</label>
         </div>
-        
+
     </div>
 </div>
     <!-- Submit button -->

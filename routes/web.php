@@ -1,11 +1,14 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\ProfileController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -34,10 +37,31 @@ Route::middleware(['guest'])->group(function(){
 });
 //Untuk mengirim email konfirmasi
 Route::get('email/verify',[RegisterController::class,'emailverif'])->name('verification.notice')->middleware('auth');
-//Untuk mengirim 
+//Untuk mengirim
 Route::get('/email/verify/{id}/{hash}',[RegisterController::class,'verif'])->name('verification.verify')->middleware('auth','signed');
 //Untuk mengirim ulang email konfirmasi
 Route::post('/email/verification-notification',[RegisterController::class,'sendEmail'])->name('verification.send')->middleware('auth','throttle:6,1');
 
 //Untuk logout
 Route::get('/logout',[LoginController::class,'logout'])->name('logout');
+
+
+
+// Route::get('/login',[LoginController::class,'login'])->name('login');
+// Route::post('/authen',[LoginController::class,'authen'])->name('authen');
+
+Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+Route::post('/generate', [AuthController::class, 'generateToken'])->name('token.generate');
+Route::post('/delete', [AuthController::class, 'deleteToken'])->name('token.delete');
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware('auth')->name('dashboard.page');
+
+Route::get('/updateprofile', function () {
+    return view('updateprofile');
+})->name('update.profile.page');
+
+Route::get('/manage', function () {
+    return view('manageapi');
+})->name('manage.api.page');

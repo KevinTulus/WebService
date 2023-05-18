@@ -15,18 +15,17 @@ class LoginController extends Controller
             return redirect ('/');
         }else{
             return view('login');
-        }       
+        }
     }
     //untuk proses login
     public function authen(Request $request){
-        // dd($request->all());
         //Variabel untuk mengatur pesan yang ditampilkan ketika input user tidak sesuai dengan validasi yang ditetapkan
             $customeMessage=[
             'required' =>ucwords(':attribute').' harus diisi', //ketika user tidak mengisi semua field
             'email' =>'Masukkan email yang valid', //ketika field email tidak diisi sesuai dengan format email
 
             ];
-             //untuk memvalidasi inputan user 
+             //untuk memvalidasi inputan user
             $credential = $request->validate([
                 'email' => ['required','email'], //untuk field email
                 'password' => ['required'] //untuk field password
@@ -36,7 +35,7 @@ class LoginController extends Controller
                 $request->session()->regenerate();
                 //untuk level user
                 if(Auth::user()->is_admin==0){//Memerika isi kolom 'is_admin' dari tabel user. Jika isinya adalah '0' maka levelnya adalah user biasa
-                    return('Halaman User'); //Pergi ke halaman user
+                    redirect()->intended('/dashboard'); //Pergi ke halaman user
                 }elseif(Auth::user()->is_admin==1){ //Memerika isi kolom 'is_admin' dari tabel user. Jika isinya adalah '1' maka levelnya adalah seorang admin
                     return('Halaman Admin');//Pergi ke halaman admin
                 }
@@ -46,9 +45,26 @@ class LoginController extends Controller
                 return back()->withErrors('Email atau Password yang Dimasukkan Salah')->withInput();
             }
     }
+
+    // public function authen(Request $request){
+    //     // dd($request->all());
+    //         $credential = $request->validate([
+    //             'email' => ['required','email'],
+    //             'password' => ['required']
+    //         ]);
+    //         if(Auth::attempt($credential)){
+    //             $request->session()->regenerate();
+
+    //             return redirect()->intended('/dashboard');
+    //         }else{
+    //             return back()->with('error','Email atau Password yang Dimasukkan Salah');
+    //         }
+    // }
+
     //untuk logout
     public function logout(){
         Auth::logout();
         return redirect('login');
     }
 }
+

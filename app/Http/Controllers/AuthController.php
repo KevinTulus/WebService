@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
@@ -63,5 +64,16 @@ class AuthController extends Controller
         return [
             'message' => 'Logged out'
         ];
+    }
+
+    public function generateToken() {
+        $user = Auth::user();
+        $token = $user->createToken('myapptoken')->plainTextToken;
+        return redirect()->back()->with('success', 'Token generated successfully. Your token is: ' . $token);
+    }
+
+    public function deleteToken() {
+        auth()->user()->tokens()->delete();
+        return redirect()->back()->with('success', 'Token deleted successfully.');
     }
 }
