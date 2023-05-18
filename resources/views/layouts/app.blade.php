@@ -74,6 +74,12 @@
                         <hr>
                         <ul class="collapse show nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
                             <li class="w-100">
+                                <a class="dropdown-item"></a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-file"></i> Documentation
+                                </a>
+                            </li>
+                            <li class="w-100">
                                 <a class="dropdown-item">                                 
                                 </a>  
                                 <a class="dropdown-item" href="{{ route('update.profile.page') }}">
@@ -97,13 +103,10 @@
                         </ul>
                     </li>
                 </ul>
-                <hr>
-                <div class="dropdown pb-4">
-                </div>
             </div>
         </div>
         <!--content-->
-        <div class="col py-4 padding: 0 100px;">
+        <div class="col py-4 padding: 0 50px;">
             @yield('content')
         </div>
     </div>
@@ -116,7 +119,7 @@
         <div class="rounded-circle bg-white shadow-1-strong d-flex align-items-center justify-content-center mb-4 mx-auto" style="width: 100px; height: 100px;">
           <img src="{{ asset('images/angkot.png') }}" height="50" alt="" loading="lazy" />
         </div>
-        <p class="text-center mb-4">angkotAPI.com Lorem ipsum dolor sit amet.</p>
+        <p class="text-center mb-4">angkotAPI.com</p>
         <ul class="list-unstyled d-flex flex-row justify-content-center">
           <li>
             <a class="text-white px-2" href="#!">
