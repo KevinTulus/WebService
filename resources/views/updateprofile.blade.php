@@ -16,7 +16,7 @@
       <div class="card " style="margin-top:50px;">
         <div class="card-body">
           <h1 class="card-title text-center">Update Profile</h1>
-          
+          <div id="alert-container"></div>
           <!-- Success Message -->
           <div id="success-message" class="alert alert-success mt-3" style="display: none;">
             Profile updated successfully
@@ -56,7 +56,7 @@
         <p>Are you sure you want to update your profile?</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
         <button type="submit" form="update-profile-form" class="btn btn-primary">Update</button>
       </div>
     </div>
@@ -64,43 +64,119 @@
 </div>
 
 <script>
-  document.getElementById('update-button').addEventListener('click', function() {
-    const username = document.getElementById('username').value.trim();
-    const password = document.getElementById('password').value.trim();
-    const confirmPassword = document.getElementById('confirm_password').value.trim();
+document.addEventListener('DOMContentLoaded', function() {
+  // Get the update button
+  const updateButton = document.getElementById('update-button');
 
-    if (username === '' || password === '' || confirmPassword === '') {
-      alert('Please fill in all fields before updating.');
-    } else {
-      $('#confirmationModal').modal('show');
+  // Get the cancel button
+  const cancelButton = document.querySelector('[data-bs-dismiss="modal"]');
+
+  // Get the alert container
+  const alertContainer = document.getElementById('alert-container');
+
+  // Add click event listener to the update button
+  updateButton.addEventListener('click', function() {
+    // Validate password confirmation
+    const passwordInput = document.getElementById('password');
+    const confirmPasswordInput = document.getElementById('confirm_password');
+    const password = passwordInput.value;
+    const confirmPassword = confirmPasswordInput.value;
+
+    // Check if the password and confirm password fields are filled
+    if (password === '' || confirmPassword === '') {
+      // Display an error message or perform any necessary actions
+      showAlert('Please fill in all the required fields.', 'alert-danger');
+      return;
     }
+
+    // Validate password confirmation
+    if (password !== confirmPassword) {
+      // Display an error message or perform any necessary actions
+      showAlert('Password and Confirm Password must match.', 'alert-danger');
+      return;
+    }
+
+    // Show the confirmation modal if field validation is successful
+    $('#confirmationModal').modal('show');
   });
 
-  document.querySelector('#confirmationModal .btn-secondary').addEventListener('click', function() {
+  // Add click event listener to the cancel button
+  cancelButton.addEventListener('click', function() {
+    // Hide the modal
     $('#confirmationModal').modal('hide');
   });
 
-  // After updating the profile, show a success message
-  document.querySelector('#update-profile-form').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent form submission
-    // Add your code here to handle the profile update
+  // Listen for form submission
+  const updateProfileForm = document.getElementById('update-profile-form');
+  updateProfileForm.addEventListener('submit', function(event) {
+    // Prevent the form from submitting by default
+    event.preventDefault();
 
-    // Hide the confirmation modal
-    $('#confirmationModal').modal('hide');
+    // Submit the form
+    this.submit();
+  });
 
-    // Show the success message
-    const successMessage = document.getElementById('success-message');
-    successMessage.style.display = 'block';
+  // Hide the success message initially
+  const successMessage = document.getElementById('success-message');
+  successMessage.style.display = 'none';
 
-    // Scroll to the top of the form
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
+  // Show an alert message
+  function showAlert(message, alertType) {
+    // Remove any existing alert classes
+    alertContainer.classList.remove('alert-success', 'alert-info', 'alert-warning', 'alert-danger');
 
-    // Hide the success message after 3 seconds
+    // Set the new alert class
+    alertContainer.classList.add('alert', alertType);
+
+    // Set the alert message
+    alertContainer.textContent = message;
+
+    // Show the alert container
+    alertContainer.style.display = 'block';
+
+    // Hide the alert after 3 seconds (3000 milliseconds)
     setTimeout(function() {
-      successMessage.style.display = 'none';
+      alertContainer.style.display = 'none';
     }, 3000);
+  }
+
+  // Listen for success message display event after form submission
+  updateProfileForm.addEventListener('submit', function(event) {
+    const form = this;
+
+    // Disable the submit button to prevent multiple submissions
+    updateButton.disabled = true;
+
+    fetch(form.action, {
+      method: form.method,
+      body: new FormData(form)
+    })
+      .then(response => {
+        if (response.ok) {
+          // Reset the form
+          form.reset();
+
+          // Display the success message
+          successMessage.style.display = 'block';
+
+          // Hide the modal
+          $('#confirmationModal').modal('hide');
+
+          // Set a timeout to hide the success message after 3 seconds (3000 milliseconds)
+          setTimeout(function() {
+            successMessage.style.display = 'none';
+          }, 3000);
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      })
+      .finally(() => {
+        // Enable the submit button after form submission completes
+        updateButton.disabled = false;
+      });
   });
+});
 </script>
 
 <!-- <script>
