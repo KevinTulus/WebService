@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -24,12 +25,12 @@ class LoginController extends Controller
             $customeMessage=[
             'required' =>ucwords(':attribute').' harus diisi', //ketika user tidak mengisi semua field
             'email' =>'Masukkan email yang valid', //ketika field email tidak diisi sesuai dengan format email
-
+            'min'=>'Panjang password minimal 8 karakter',
             ];
              //untuk memvalidasi inputan user 
             $credential = $request->validate([
                 'email' => ['required','email'], //untuk field email
-                'password' => ['required'] //untuk field password
+                'password' => ['required','min:8'] //untuk field password
             ],$customeMessage);
             //proses autentikasi (cek dokumentasi laravel 10)
             if(Auth::attempt($credential)){
@@ -40,6 +41,8 @@ class LoginController extends Controller
                 }elseif(Auth::user()->is_admin==1){ //Memerika isi kolom 'is_admin' dari tabel user. Jika isinya adalah '1' maka levelnya adalah seorang admin
                     return('Halaman Admin');//Pergi ke halaman admin
                 }
+            }elseif(User::where('email',$request->email)){
+                return back()->withErrors('Akun belum terdaftar, silahkan daftar terlebih dahulu');
                 // return redirect()->intended('/');
             }else{
                 //untuk kembali ke halaman login dengan membawa pesan error
