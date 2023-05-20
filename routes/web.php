@@ -54,9 +54,9 @@ Route::put('/profile', [ProfileController::class, 'update'])->name('profile.upda
 Route::post('/generate', [AuthController::class, 'generateToken'])->name('token.generate');
 Route::post('/delete', [AuthController::class, 'deleteToken'])->name('token.delete');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware('auth')->name('dashboard.page');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware('auth')->name('dashboard.page');
 
 Route::get('/updateprofile', function () {
     return view('updateprofile');
@@ -65,3 +65,51 @@ Route::get('/updateprofile', function () {
 Route::get('/manage', function () {
     return view('manageapi');
 })->name('manage.api.page');
+Route::get('/', function () {
+    return view('layouts.mainadmin');
+});
+
+Route::get('/dashboard', function () {
+    return view('dashboard', [
+        "title" => "Dashboard"
+    ]);
+});
+
+Route::get('/adminprofile', function () {
+    return view('adminprofile', [
+        "title" => "Profil",
+        "halaman" => "Data Administrator"
+    ]);
+});
+
+Route::get('/angkot', function () {
+    return view('angkot', [
+        "title" => "Angkot",
+        "halaman" => "Data Angkot"
+    ]);
+});
+
+Route::get('/rute', function () {
+    return view('rute', [
+        "halaman" => "Data Rute Lintasan Angkot"
+    ]);
+});
+
+Route::get('/namajalan', function () {
+    return view('namajalan', [
+        "halaman" => "Data Nama Jalan"
+    ]);
+});
+
+Route::get('/lokasi', function () {
+    return view('lokasi', [
+        "title" => "Lokasi",
+        "halaman" => "Data Lokasi"
+    ]);
+});
+
+Route::get('/deskripsi', function () {
+    return view('deskripsi', [
+        "title" => "Deskripsi"
+    ]);
+});
