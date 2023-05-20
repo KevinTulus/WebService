@@ -9,7 +9,22 @@
 <style>
     .formLogin{
         max-width: 500px;
-        margin: 20px auto 0;
+        margin: 120px auto auto;
+        background-color: rgba(255, 255, 255, 0.7);
+        padding: 20px;
+        border-radius: 5px;
+    }
+    body{
+        background-image: url("{{asset('img/kota medan.jpeg')}}");
+        background-size: 120%;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+    label{
+        font-weight: 500;
+    }
+    .nav-link{
+        font-weight: 700;
     }
 </style>
 </head>
@@ -53,20 +68,21 @@
             @csrf
     <!-- Name input -->
     <div class="form-outline mb-4">
-        <input name="nama" type="text" id="registerName" class="form-control" value="{{ old('nama') }}" />
         <label class="form-label" for="registerName">Name</label>
+        <input name="nama" type="text" id="registerName" class="form-control" value="{{ old('nama') }}" />
     </div>
 
         <!-- Email input -->
         <div class="form-outline mb-4">
-            <input name="email" id="registerEmail" class="form-control" value="{{ old('email') }}" />
             <label class="form-label" for="registerEmail">Email</label>
+            <input name="email" id="registerEmail" class="form-control" value="{{ old('email') }}" />
         </div>
         
         <!-- Password input -->
         <div class="form-outline mb-4">
-            <input name="password" type="password" id="registerPassword" class="form-control" />
             <label class="form-label" for="registerPassword">Password</label>
+            <input name="password" type="password" id="registerPassword" class="form-control" />
+            <input type="checkbox" id="showInputPassword">Show Password
         </div> 
         
         <!-- Submit button -->
@@ -79,8 +95,18 @@
 </div>
 
 
-<!-- Pills content -->
+<script>
+    var inputPassword = document.getElementById('registerPassword');
+    var showPassword = document.getElementById('showInputPassword');
 
+    showPassword.addEventListener("change",function(){
+        if (showPassword.checked){
+            inputPassword.type="text";
+        }else{
+            inputPassword.type="password";
+        }
+    });
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 </html>

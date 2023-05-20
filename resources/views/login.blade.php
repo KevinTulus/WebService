@@ -9,12 +9,32 @@
 <style>
     .formLogin{
         max-width: 500px;
-        margin: 20px auto 0;
+        margin: 120px auto auto;
+        background-color: rgba(255, 255, 255, 0.7);
+        padding: 20px;
+        border-radius: 5px;
+    }
+    body{
+        background-image: url("{{asset('img/kota medan.jpeg')}}");
+        background-size: 120%;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+    label{
+        font-weight: 500;
+    }
+    .nav-link{
+        font-weight: 700;
+    }
+    .text-center{
+        font-weight: 700;
+    }
+    .text-center a{
+        text-decoration: none;
     }
 </style>
 </head>
 <body>
-
 <div class="formLogin">
     <div style="text-align: center;">
         <h1>API ANGKOTKU</h1>
@@ -63,14 +83,15 @@
         <!-- Email input -->
         <div class="form-outline mb-4">
             <!-- {{ old ('email') }} agar ketika kembali ke halaman login maka inputan yang baru saja tidak hilang-->
+            <label class="form-label" for="loginName">Email</label>
             <input name="email" id="loginName" class="form-control" value="{{ old ('email') }}"/>
-            <label class="form-label" for="loginName">Email or username</label>
         </div>
 
         <!-- Password input -->
         <div class="form-outline mb-4">
+            <label class="form-label" for="loginPassword" style="display: block;">Password</label>
             <input name="password" type="password" id="loginPassword" class="form-control"/>
-            <label class="form-label" for="loginPassword">Password</label>
+            <input type="checkbox" id="showPasswordCheckbox">Show Password
         </div>
 
     </div>
@@ -85,10 +106,19 @@
     </div>
 </form>
 </div>
-
-
 <!-- Pills content -->
+<script>
+    var passwordInput = document.getElementById("loginPassword");
+    var showPasswordCheckbox = document.getElementById("showPasswordCheckbox");
 
+    showPasswordCheckbox.addEventListener("change", function () {
+    if (showPasswordCheckbox.checked) {
+    passwordInput.type = "text";
+    } else {
+    passwordInput.type = "password";
+    }
+    });
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 </html>

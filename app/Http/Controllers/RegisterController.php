@@ -26,7 +26,7 @@ class RegisterController extends Controller
         $customeMessage=[
             'required' =>ucwords(':attribute').' harus diisi', //ketika user tidak mengisi semua field
             'email' =>'Masukkan email yang valid', //ketika field email tidak diisi sesuai dengan format email
-
+            'min'=>'Panjang Password Minimal 8 karakter',
         ];
         //untuk memvalidasi inputan user 
         $request->validate([
@@ -34,6 +34,9 @@ class RegisterController extends Controller
             'email'=> ['required','email'], //'email' untuk field email
             'password' => ['required','min:8'] //'password' untuk field password
         ], $customeMessage);
+        if(User::where('email',$request->email)->exists()){
+            return back()->withErrors('Email yang dimasukkan sudah terdaftar');
+        }
         //untuk memasukkan inputan ke database menggunakan modal 'User'
         $user = User::create([
             'name' => $request->nama, //'name' adalah nama kolom di database ($request->nama adalah untuk mengambil nilai dari field nama)

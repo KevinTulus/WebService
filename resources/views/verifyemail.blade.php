@@ -36,8 +36,11 @@
         width: 200px;
         margin:0 auto;
     }
-    swal{
-
+    body{
+        background-image: url("{{asset('img/kota medan.jpeg')}}");
+        background-size: 120%;
+        background-position: center;
+        background-repeat: no-repeat;
     }
     </style>
 </head>
