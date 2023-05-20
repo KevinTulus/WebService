@@ -1,0 +1,79 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+
+body {
+    font-family: "Poppins", sans-serif;
+    background-color: #fff4e0;
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+}
+
+.fixed-sidebar {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 999;
+}
+
+.bg-custom {
+    background-color: #e9c46a;
+}
+
+.bg-custom-2 {
+    background-color: #faedcd;
+}
+
+.text-custom {
+    color: #242423;
+}
+
+/* Adjusted styles for the sidebar */
+.sidebar {
+    padding-top: 80px; /* Adjust the padding as per your requirement */
+    padding-bottom: 20px; /* Adjust the padding as per your requirement */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar .nav-link {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 0;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    background-color: transparent;
+    color: #000;
+}
+
+.sidebar .nav-link:hover {
+    background-color: #e9c46a;
+    color: #000;
+}
+
+.sidebar .active {
+    background-color: #588157;
+    color: #000;
+}
+
+/* Adjusted styles for the content area */
+.content {
+    margin-left: 240px; /* Set the same width as the sidebar */
+    padding: 20px;
+}
+
+.content {
+    margin-left: 260px; /* Increase or decrease this value as per your desired spacing */
+    padding: 20px;
+}
+
+.modal-dialog-pop-up {
+    position: fixed;
+    bottom: 15%; /* Adjust this value as needed */
+    left: 35%;
+    transform: translateX(-50%);
+}
