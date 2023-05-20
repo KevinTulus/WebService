@@ -12,7 +12,7 @@ class AngkotController extends Controller
 {
     public function cari(string $nama_jalan)
     {
-        return Rute::join('street_names', 'rutes.street_names_id', '=', 'street_names.id')
+        return Rute::join('street_names', 'rutes.street_name_id', '=', 'street_names.id')
                     ->leftJoin('lokasis', 'street_names.id', '=', 'lokasis.street_name_id')
                     ->where('nama_jalan', 'like', '%'.$nama_jalan.'%')
                     ->orWhere('nama_lokasi', 'like', '%'.$nama_jalan.'%')
@@ -25,7 +25,7 @@ class AngkotController extends Controller
         $harga_temp = 0;
         $hargaPerKilometer = Deskripsi::first('harga_per_kilometer');
 
-        $harga = Rute::join('street_names', 'rutes.street_names_id', '=', 'street_names.id')
+        $harga = Rute::join('street_names', 'rutes.street_name_id', '=', 'street_names.id')
                             ->where('angkot_id', $id)
                             ->get(['nama_jalan', 'urutan', 'km']);
 

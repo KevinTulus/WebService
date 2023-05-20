@@ -1,7 +1,5 @@
-@extends('layouts.app')
-
-@section('content')
-<!-- Manage API Section -->
+@extends('layouts.mainadmin')
+@section('admin')
 
 <div class="container py-4" style="padding: 0 100px;margin-bottom: 50px;margin-top: 100px;">
 
@@ -32,7 +30,7 @@
             <button type="button" class="btn btn-secondary align-items-center mr-2" data-toggle="modal" data-target="#regenerateApiKeyModal">
               <i class="fas fa-sync-alt mr-1"></i> <span class="d-none d-sm-inline">Regenerate</span>
             </button>
-            <form action="{{ route('token.delete') }}" method="POST" class="d-inline">
+            <form action="{{ route('user.token.destroy') }}" method="POST" class="d-inline">
               @csrf
               {{-- @method('DELETE') --}}
               <button type="submit" class="btn btn-danger align-items-center" onclick="return confirm('Are you sure you want to delete your API Key?')">
@@ -46,27 +44,6 @@
     </div>
   </div>
 </div>
-
-<!-- View API Key Modal -->
-{{-- <div class="modal fade" id="apiKeyModal" tabindex="-1" role="dialog" aria-labelledby="apiKeyModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="apiKeyModalLabel">API Key</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <p class="card-text">Your API Key is:</p>
-        <textarea class="form-control" rows="3" readonly>kode api disini</textarea>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div> --}}
 
 <!-- Regenerate API Key Modal -->
 <div class="modal fade" id="regenerateApiKeyModal" tabindex="-1" role="dialog" aria-labelledby="regenerateApiKeyModalLabel" aria-hidden="true">
@@ -83,7 +60,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        <form action="{{ route('token.generate') }}" method="POST" class="d-inline">
+        <form action="{{ route('user.token.create') }}" method="POST" class="d-inline">
           @csrf
           <button type="submit" class="btn btn-primary">Regenerate</button>
         </form>

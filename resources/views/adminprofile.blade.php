@@ -1,27 +1,39 @@
 @extends('layouts.mainadmin')
 @section('admin')
+@if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
 <div class="container mt-5">
     <div class="row">
       <div class="col-md-6">
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">Profile</h5>
-            <form>
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            <form action="{{ route('admin.profile.update') }}" method="POST">
+                @csrf
+                @method('PUT')
               <div class="mb-3">
-                <label for="name" class="form-label">Name</label>
-                <input type="text" class="form-control" id="name" placeholder="Nama ...">
-              </div>
-              <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" placeholder="email...">
+                <label for="username" class="form-label">Name</label>
+                <input type="text" class="form-control" name="username" id="username" value="{{ $user->name }}">
               </div>
               <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" placeholder="Password ...">
+                <input type="password" class="form-control" name="password" id="password" placeholder="Password ...">
               </div>
               <div class="mb-3">
-                <label for="password" class="form-label">Konfirmasi Password</label>
-                <input type="password" class="form-control" id="password" placeholder="Konfirmasi password ...">
+                <label for="password_confirmation" class="form-label">Konfirmasi Password</label>
+                <input type="password" class="form-control" name="password_confirmation" id="password_confirmation" placeholder="Konfirmasi password ...">
               </div>
               <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
             </form>

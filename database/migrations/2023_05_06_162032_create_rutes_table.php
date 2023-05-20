@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('angkot_id');
             $table->foreign('angkot_id')->references('id')->on('angkots');
-            $table->unsignedBigInteger('street_names_id');
-            $table->foreign('street_names_id')->references('id')->on('street_names');
+            $table->unsignedBigInteger('street_name_id');
+            $table->foreign('street_name_id')->references('id')->on('street_names');
             $table->integer('urutan');
             $table->timestamps();
         });

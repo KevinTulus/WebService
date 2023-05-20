@@ -1,23 +1,34 @@
 @extends('layouts.mainadmin')
 @section('admin')
+@if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
 <div class="container mt-5">
     <div class="row">
       <div class="col-md-6">
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">Data Nama Jalan</h5>
-            <form>
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            <form action="{{route ('jalan.store') }}" method="post">
+                @csrf
               <div class="mb-3">
-                <label for="name" class="form-label">Nomor</label>
-                <input type="text" class="form-control" id="name" placeholder="Nomor Angkot (121)">
+                <label for="nama_jalan" class="form-label">Nama Jalan</label>
+                <input type="text" class="form-control" name="nama_jalan" id="nama_jalan" placeholder="Nama Jalan" value="{{ old('nama_jalan') }}">
               </div>
               <div class="mb-3">
-                <label for="namaJalan" class="form-label">Nama Jalan</label>
-                <input type="text" class="form-control" id="email" placeholder="Nama Angkot (KPUM)">
-              </div>
-              <div class="mb-3">
-                <label for="panjangLintasan" class="form-label">Panjang Lintasan (km)</label>
-                <input type="text" class="form-control" id="password" placeholder="Panjang dalam kilometer">
+                <label for="km" class="form-label">Panjang Lintasan</label>
+                <input type="text" class="form-control" name="km" id="km" placeholder="Panjang dalam kilometer" value="{{ old('km') }}">
               </div>
               <button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah</button>
             </form>
@@ -31,21 +42,29 @@
             <table class="table table-striped">
               <thead>
                 <tr>
-                  <th scope="col">Nomor</th>
-                  <th scope="col">Nama</th>
-                  <th scope="col">Warna</th>
+                  <th scope="col">No.</th>
+                  <th scope="col">Nama Jalan</th>
+                  <th scope="col">Panjang Lintasan</th>
                   <th scope="col">Aksi</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <th scope="row">1</th>
-                  <td>John Doe</td>
-                  <td>john@example.com</td>
-                  <td>
-                    <button type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
-                    <button type="button" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                  </td>
+                    @foreach ($jalans as $jalan)
+                        <tr>
+                            <td scope="row">{{ $loop->iteration }}</td>
+                            <td>{{ $jalan->nama_jalan }}</td>
+                            <td>{{ $jalan->km }} km</td>
+                            <td>
+                            <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('jalan.destroy', $jalan->id) }}" method="POST">
+                                <a href="{{ route('jalan.edit', $jalan->id) }}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
+                            </form>
+                            </td>
+                        </tr>
+                    @endforeach
                 </tr>
               </tbody>
             </table>

@@ -1,14 +1,21 @@
 <?php
 
-use App\Http\Controllers\AuthController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ProfileController;
 
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\user\TokenController;
+use App\Http\Controllers\user\UserProfileController;
+
+
+use App\Http\Controllers\admin\AdminProfileController;
+use App\Http\Controllers\admin\DeskripsiController;
+use App\Http\Controllers\admin\JalanController;
+use App\Http\Controllers\admin\LokasiController;
+use App\Http\Controllers\admin\RuteController;
+use App\Http\Controllers\admin\AngkutanKotaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,13 +27,20 @@ use App\Http\Controllers\ProfileController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+// -------------------------------------- login, register, email verification Routes -----------------------------------------
+
 //auth agar halaman hanya bisa diakses oleh user yang berhasil login
 //guest agar halaman hanya bisa diakses oleh user level 'guest'
 Route::get('/', function () {
-    return view('welcome');
+    if (auth()->user()->is_admin == 1) {
+        return redirect()->route('angkot.index');
+    } else {
+        return redirect()->route('user.dashboard');
+    }
 })->middleware('auth','verified','auth.session');
 
-Route::middleware(['guest'])->group(function(){
+Route::middleware('guest')->group(function(){
     //login
     Route::get('/login',[LoginController::class,'login'])->name('login');
     Route::post('/authen',[LoginController::class,'authen'])->name('authen');
@@ -45,71 +59,47 @@ Route::post('/email/verification-notification',[RegisterController::class,'sendE
 //Untuk logout
 Route::get('/logout',[LoginController::class,'logout'])->name('logout');
 
+// -------------------------------------------- User Routes -------------------------------------------------
 
+Route::middleware('auth', 'verified')->group(function(){
+    Route::get('/dashboard', function () {
+        return view('dashboard', [
+            "title" => "Dashboard",
+            "halaman" => "Dashboard User",
+        ]);
+    })->name('user.dashboard');
 
-// Route::get('/login',[LoginController::class,'login'])->name('login');
-// Route::post('/authen',[LoginController::class,'authen'])->name('authen');
+    Route::get('/updateprofile', [UserProfileController::class, 'index'])->name('user.profile.index');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('user.profile.update');
 
-Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
-Route::post('/generate', [AuthController::class, 'generateToken'])->name('token.generate');
-Route::post('/delete', [AuthController::class, 'deleteToken'])->name('token.delete');
-
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware('auth')->name('dashboard.page');
-
-Route::get('/updateprofile', function () {
-    return view('updateprofile');
-})->name('update.profile.page');
-
-Route::get('/manage', function () {
-    return view('manageapi');
-})->name('manage.api.page');
-Route::get('/', function () {
-    return view('layouts.mainadmin');
+    Route::get('/token', [TokenController::class, 'index'])->name('user.token.index');
+    Route::post('/generate', [TokenController::class, 'create'])->name('user.token.create');
+    Route::post('/delete', [TokenController::class, 'destroy'])->name('user.token.destroy');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard', [
-        "title" => "Dashboard"
-    ]);
+// -------------------------------------------- Admin Routes -------------------------------------------------
+
+Route::middleware('auth', 'verified')->group(function(){
+    Route::put('/adminprofile', [ProfileController::class, 'update'])->name('admin.profile.update');
+    Route::post('/rute/{id}', [RuteController::class, 'store'])->name('admin.rute.store');
+    Route::resource('adminprofile', AdminProfileController::class);
+    Route::resource('angkot', AngkutanKotaController::class);
+    Route::resource('rute', RuteController::class);
+    Route::resource('jalan', JalanController::class);
+    Route::resource('lokasi', LokasiController::class);
+    Route::resource('deskripsi', DeskripsiController::class);
 });
 
-Route::get('/adminprofile', function () {
-    return view('adminprofile', [
-        "title" => "Profil",
-        "halaman" => "Data Administrator"
-    ]);
-});
 
-Route::get('/angkot', function () {
-    return view('angkot', [
-        "title" => "Angkot",
-        "halaman" => "Data Angkot"
-    ]);
-});
+Route::get('/admin', function () {
+    // return view('layouts.mainadmin', [
+    //     "title" => "Dashboard"
+    // ]);
+    return redirect()->route('angkot.index');
+})->name('admin.dashboard');
 
-Route::get('/rute', function () {
-    return view('rute', [
-        "halaman" => "Data Rute Lintasan Angkot"
-    ]);
-});
-
-Route::get('/namajalan', function () {
-    return view('namajalan', [
-        "halaman" => "Data Nama Jalan"
-    ]);
-});
-
-Route::get('/lokasi', function () {
-    return view('lokasi', [
-        "title" => "Lokasi",
-        "halaman" => "Data Lokasi"
-    ]);
-});
-
-Route::get('/deskripsi', function () {
-    return view('deskripsi', [
-        "title" => "Deskripsi"
-    ]);
-});
+// Route::get('/admin/dashboard', function () {
+//     return view('dashboard', [
+//         "title" => "Dashboard"
+//     ]);
+// });

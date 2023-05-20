@@ -20,7 +20,7 @@
 <header>
   	<!-- navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
-  <a class="navbar-brand d-flex align-items-center" href="{{ route('dashboard.page') }}">
+  {{-- <a class="navbar-brand d-flex align-items-center" href="{{ route('dashboard.page') }}"> --}}
     <img class="logo-icon mr-2" src="{{ asset('images/angkot.png') }}" alt="Logo" style="max-height: 55px; max-width: 220px;">
   </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,7 +29,7 @@
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link text-white" href="{{ route('dashboard.page') }}">Overview</a>
+        {{-- <a class="nav-link text-white" href="{{ route('dashboard.page') }}">Overview</a> --}}
       </li>
       <li class="nav-item">
         <a class="nav-link text-white" href="#">Documentation</a>
@@ -43,8 +43,8 @@
         </a>
         @endif
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="{{ route('update.profile.page') }}"><i class="fas fa-user-circle mr-2"></i>Update Profile</a>
-          <a class="dropdown-item" href="{{ route('manage.api.page') }}"><i class="fas fa-cogs mr-2"></i>Manage API</a>
+          <a class="dropdown-item" href="{{ route('user.profile') }}"><i class="fas fa-user-circle mr-2"></i>Update Profile</a>
+          <a class="dropdown-item" href="{{ route('user.token') }}"><i class="fas fa-cogs mr-2"></i>Manage API</a>
           <a class="dropdown-item" href="{{ route('logout') }}"><i class="fas fa-sign-out-alt mr-2"></i>Logout</a>
         </div>
       </li>

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 class LoginController extends Controller
 {
@@ -35,9 +35,9 @@ class LoginController extends Controller
                 $request->session()->regenerate();
                 //untuk level user
                 if(Auth::user()->is_admin==0){//Memerika isi kolom 'is_admin' dari tabel user. Jika isinya adalah '0' maka levelnya adalah user biasa
-                    redirect()->intended('/dashboard'); //Pergi ke halaman user
+                    return redirect()->route('user.dashboard'); //Pergi ke halaman user
                 }elseif(Auth::user()->is_admin==1){ //Memerika isi kolom 'is_admin' dari tabel user. Jika isinya adalah '1' maka levelnya adalah seorang admin
-                    return('Halaman Admin');//Pergi ke halaman admin
+                    return redirect()->route('admin.angkot');//Pergi ke halaman admin
                 }
                 // return redirect()->intended('/');
             }else{
