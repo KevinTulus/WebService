@@ -38,7 +38,7 @@ class LoginController extends Controller
                 if(Auth::user()->is_admin==0){//Memerika isi kolom 'is_admin' dari tabel user. Jika isinya adalah '0' maka levelnya adalah user biasa
                     return redirect()->route('user.dashboard'); //Pergi ke halaman user
                 }elseif(Auth::user()->is_admin==1){ //Memerika isi kolom 'is_admin' dari tabel user. Jika isinya adalah '1' maka levelnya adalah seorang admin
-                    return redirect()->route('admin.angkot');//Pergi ke halaman admin
+                    return redirect()->route('angkot.index');//Pergi ke halaman admin
                 }
             }elseif(User::where('email',$request->email)){
                 return back()->withErrors('Akun belum terdaftar, silahkan daftar terlebih dahulu');
