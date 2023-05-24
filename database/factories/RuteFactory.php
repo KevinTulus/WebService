@@ -21,7 +21,7 @@ class RuteFactory extends Factory
             // 'nama_jalan' => fake()->streetName(),
             // 'urutan' => fake()->unique()->numberBetween(1, 10),
             // 'km' => fake()->randomFloat(1, 1, 10),
-            'street_names_id' => fake()->numberBetween(1, 50),
+            'street_name_id' => fake()->numberBetween(1, 50),
         ];
     }
 }
