@@ -20,8 +20,8 @@ Route::post('/angkot/login', [AuthController::class, 'login']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/angkot', [AngkotController::class, 'allAngkot']);
-    Route::get('/nama_jalan', [AngkotController::class, 'allJalan']);
-    Route::get('/lokasi', [AngkotController::class, 'allLokasi']);
+    Route::get('/angkot/nama_jalan', [AngkotController::class, 'allJalan']);
+    Route::get('/angkot/lokasi', [AngkotController::class, 'allLokasi']);
     Route::get('/angkot/{no}', [AngkotController::class, 'oneAngkot']);
     Route::get('/angkot/search/{nama_jalan}', [AngkotController::class, 'angkotTo']);
     Route::get('/angkot/search/{nama_jalan1}/{nama_jalan2}', [AngkotController::class, 'angkotBetween']);

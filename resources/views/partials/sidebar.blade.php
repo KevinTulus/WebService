@@ -13,11 +13,11 @@
         <a href="{{ route('rute.index') }}"><span class="fa fa-support mr-3"></span> Rute</a>
     </li>
     <li class="{{ ($title === "Deskripsi") ? 'active' : '' }}">
-        <a href="{{ route('deskripsi.index') }}"><span class="fa fa-support mr-3"></span> Deskripsi</a>
+        <a href="{{ route('deskripsi.index') }}"><span class="fa fa-support mr-3"></span> Estimasi Harga</a>
     </li>
     <li class="{{ ($title === "Profil") ? 'active' : '' }}">
         <a href="{{ route('adminprofile.index') }}"><span class="fa fa-home mr-3"></span> Profil</a>
-        </li>
+    </li>
     <li>
         <a href="{{ route('logout') }}"><span class="fa-solid fa-right-from-bracket mr-3"></span> Log Out</a>
     </li>
@@ -27,7 +27,7 @@
     </li>
     <li class="{{ ($title === "Profil") ? 'active' : '' }}">
         <a href="{{ route('user.profile.index') }}"><span class="fa fa-home mr-3"></span> Profil</a>
-        </li>
+    </li>
     <li>
     <li>
         <a href="{{ route('logout') }}"><span class="fa-solid fa-right-from-bracket mr-3"></span> Log Out</a>
