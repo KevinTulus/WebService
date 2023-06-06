@@ -25,10 +25,12 @@
     <li class="{{ ($title === "Token") ? 'active' : '' }}">
         <a href="{{ route('user.token.index') }}"><span class="fa fa-gift mr-3"></span> Token</a>
     </li>
+    <li class="{{ ($title === "Dokumentasi") ? 'active' : '' }}">
+        <a href="{{ route('user.dokumentasi') }}"><span class="fa fa-file mr-3"></span> Documentation</a>
+    </li>
     <li class="{{ ($title === "Profil") ? 'active' : '' }}">
         <a href="{{ route('user.profile.index') }}"><span class="fa fa-home mr-3"></span> Profil</a>
     </li>
-    <li>
     <li>
         <a href="{{ route('logout') }}"><span class="fa-solid fa-right-from-bracket mr-3"></span> Log Out</a>
     </li>

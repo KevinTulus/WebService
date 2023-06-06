@@ -5,16 +5,16 @@
 
   <h1 class="mb-4">Manage API</h1>
   <span>
-  Welcome to our API Management Page! Here, you have complete control over managing your APIs securely and ensuring that they remain hidden from prying eyes. With the card below, you can easily configure and protect your valuable API endpoints.</span>
-        <p></p>
-        <p class="lead">
-        For complete documentation please visit our <a href="#" target="_blank">angkot API Documentation</a> section.
-        </p>
-        @if(Session::has('success'))
-            <div class="alert alert-success" role="alert">
-                {{Session::get('success')}}
-            </div>
-        @endif
+    Welcome to our API Management Page! Here, you have complete control over managing your APIs securely and ensuring that they remain hidden from prying eyes. With the card below, you can easily configure and protect your valuable API endpoints.</span>
+  <p></p>
+  <p class="lead">
+    For complete documentation please visit our <a href="{{ route('user.dokumentasi') }}" target="_blank">angkot API Documentation</a> section.
+  </p>
+  @if(Session::has('success'))
+  <div class="alert alert-success" role="alert">
+    {{Session::get('success')}}
+  </div>
+  @endif
   <div class="row">
     <div class="col-md-4">
       <!-- API Key Info -->
@@ -39,10 +39,10 @@
             </form>
           </div>
         </div>
-        </div>
       </div>
     </div>
   </div>
+</div>
 </div>
 
 <!-- Regenerate API Key Modal -->
@@ -69,4 +69,3 @@
   </div>
 </div>
 @endsection
-

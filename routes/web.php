@@ -38,36 +38,42 @@ Route::get('/', function () {
     } else {
         return redirect()->route('user.dashboard');
     }
-})->middleware('auth','verified','auth.session');
+})->middleware('auth', 'verified', 'auth.session');
 
-Route::middleware('guest')->group(function(){
+Route::middleware('guest')->group(function () {
     //login
-    Route::get('/login',[LoginController::class,'login'])->name('login');
-    Route::post('/authen',[LoginController::class,'authen'])->name('authen');
+    Route::get('/login', [LoginController::class, 'login'])->name('login');
+    Route::post('/authen', [LoginController::class, 'authen'])->name('authen');
     //register
-    Route::get('/register',[RegisterController::class,'regis'])->name('register');
-    Route::post('/proses',[RegisterController::class,'proses'])->name('proses');
-
+    Route::get('/register', [RegisterController::class, 'regis'])->name('register');
+    Route::post('/proses', [RegisterController::class, 'proses'])->name('proses');
 });
 //Untuk mengirim email konfirmasi
-Route::get('email/verify',[RegisterController::class,'emailverif'])->name('verification.notice')->middleware('auth');
+Route::get('email/verify', [RegisterController::class, 'emailverif'])->name('verification.notice')->middleware('auth');
 //Untuk mengirim
-Route::get('/email/verify/{id}/{hash}',[RegisterController::class,'verif'])->name('verification.verify')->middleware('auth','signed');
+Route::get('/email/verify/{id}/{hash}', [RegisterController::class, 'verif'])->name('verification.verify')->middleware('auth', 'signed');
 //Untuk mengirim ulang email konfirmasi
-Route::post('/email/verification-notification',[RegisterController::class,'sendEmail'])->name('verification.send')->middleware('auth','throttle:6,1');
+Route::post('/email/verification-notification', [RegisterController::class, 'sendEmail'])->name('verification.send')->middleware('auth', 'throttle:6,1');
 
 //Untuk logout
-Route::get('/logout',[LoginController::class,'logout'])->name('logout');
+Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
 // -------------------------------------------- User Routes -------------------------------------------------
 
-Route::middleware('auth', 'verified')->group(function(){
+Route::middleware('auth', 'verified')->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard', [
             "title" => "Dashboard",
             "halaman" => "Dashboard User",
         ]);
     })->name('user.dashboard');
+
+    Route::get('/dokumentasi', function () {
+        return view('dokumentasi', [
+            "title" => "Dokumentasi",
+            "halaman" => "Dokumentasi User",
+        ]);
+    })->name('user.dokumentasi');
 
     Route::get('/updateprofile', [UserProfileController::class, 'index'])->name('user.profile.index');
     Route::put('/profile', [ProfileController::class, 'update'])->name('user.profile.update');
@@ -79,7 +85,7 @@ Route::middleware('auth', 'verified')->group(function(){
 
 // -------------------------------------------- Admin Routes -------------------------------------------------
 
-Route::middleware('auth', 'verified')->group(function(){
+Route::middleware('auth', 'verified')->group(function () {
     Route::put('/adminprofile', [ProfileController::class, 'update'])->name('admin.profile.update');
     Route::post('/rute/{id}', [RuteController::class, 'store'])->name('admin.rute.store');
     Route::resource('adminprofile', AdminProfileController::class);

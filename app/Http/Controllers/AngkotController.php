@@ -13,11 +13,11 @@ class AngkotController extends Controller
     public function cari(string $nama_jalan)
     {
         return Rute::join('street_names', 'rutes.street_name_id', '=', 'street_names.id')
-                    ->leftJoin('lokasis', 'street_names.id', '=', 'lokasis.street_name_id')
-                    ->where('nama_jalan', 'like', '%'.$nama_jalan.'%')
-                    ->orWhere('nama_lokasi', 'like', '%'.$nama_jalan.'%')
-                    ->pluck('angkot_id')
-                    ->unique();
+            ->leftJoin('lokasis', 'street_names.id', '=', 'lokasis.street_name_id')
+            ->where('nama_jalan', 'like', '%' . $nama_jalan . '%')
+            ->orWhere('nama_lokasi', 'like', '%' . $nama_jalan . '%')
+            ->pluck('angkot_id')
+            ->unique();
     }
 
     public function harga(string $id)
@@ -26,11 +26,11 @@ class AngkotController extends Controller
         $hargaPerKilometer = Deskripsi::first('harga_per_kilometer');
 
         $harga = Rute::join('street_names', 'rutes.street_name_id', '=', 'street_names.id')
-                            ->where('angkot_id', $id)
-                            ->get(['nama_jalan', 'urutan', 'km']);
+            ->where('angkot_id', $id)
+            ->get(['nama_jalan', 'urutan', 'km']);
 
         foreach ($harga as $key => $value) {
-            $harga_temp += $harga[$key]['km']*$hargaPerKilometer['harga_per_kilometer'];
+            $harga_temp += $harga[$key]['km'] * $hargaPerKilometer['harga_per_kilometer'];
             $harga[$key]['harga'] = $harga_temp;
         }
 
@@ -67,7 +67,7 @@ class AngkotController extends Controller
     public function allLokasi()
     {
         $lokasi = Lokasi::join('street_names', 'lokasis.street_name_id', '=', 'street_names.id')
-                        ->get(['nama_lokasi', 'nama_jalan', 'km']);
+            ->get(['nama_lokasi', 'nama_jalan', 'km']);
         return response()->json(['data' => $lokasi], 200);
     }
 
